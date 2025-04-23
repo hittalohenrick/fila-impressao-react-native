@@ -1,5 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet, Alert } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  FlatList,
+  StyleSheet,
+  Alert,
+} from "react-native";
 
 type Veiculo = {
   id: string;
@@ -8,33 +16,36 @@ type Veiculo = {
 };
 
 export default function App() {
-  const [tipo, setTipo] = useState('');
+  const [tipo, setTipo] = useState("");
   const [fila, setFila] = useState<Veiculo[]>([]);
 
   const adicionarCarro = () => {
     if (!tipo.trim()) {
-      Alert.alert('Tipo de veículo é obrigatório!');
+      Alert.alert("Tipo de veículo é obrigatório!");
       return;
     }
 
     const novoVeiculo: Veiculo = {
       id: Math.random().toString(),
       tipo,
-      hora: new Date().toLocaleTimeString()
+      hora: new Date().toLocaleTimeString(),
     };
 
     setFila([...fila, novoVeiculo]);
-    setTipo('');
+    setTipo("");
   };
 
   const atenderCarro = () => {
     if (fila.length === 0) {
-      Alert.alert('Nenhum carro na fila!');
+      Alert.alert("Nenhum carro na fila!");
       return;
     }
 
     const [primeiro, ...resto] = fila;
-    Alert.alert('Atendido', `Veículo: ${primeiro.tipo}, Hora: ${primeiro.hora}`);
+    Alert.alert(
+      "Atendido",
+      `Veículo: ${primeiro.tipo}, Hora: ${primeiro.hora}`,
+    );
     setFila(resto);
   };
 
@@ -49,16 +60,26 @@ export default function App() {
         onChangeText={setTipo}
       />
 
-      <Button title="Adicionar à fila" onPress={adicionarCarro} color="#2196F3" />
+      <Button
+        title="Adicionar à fila"
+        onPress={adicionarCarro}
+        color="#2196F3"
+      />
 
-      <Button title="Atender próximo veículo" onPress={atenderCarro} color="#4CAF50" />
+      <Button
+        title="Atender próximo veículo"
+        onPress={atenderCarro}
+        color="#4CAF50"
+      />
 
       <Text style={styles.subtitle}>Fila atual:</Text>
       <FlatList
         data={fila}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
-          <Text>{index + 1}. {item.tipo} - {item.hora}</Text>
+          <Text>
+            {index + 1}. {item.tipo} - {item.hora}
+          </Text>
         )}
       />
     </View>
@@ -69,22 +90,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    paddingTop: 50
+    paddingTop: 50,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20
+    fontWeight: "bold",
+    marginBottom: 20,
   },
   subtitle: {
     marginTop: 20,
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   input: {
     borderWidth: 1,
     padding: 8,
     marginVertical: 10,
-    borderRadius: 5
-  }
+    borderRadius: 5,
+  },
 });

@@ -1,24 +1,29 @@
-// App.tsx
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet, Alert } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  FlatList,
+  StyleSheet,
+  Alert,
+} from "react-native";
 
-// Tipo do documento
 interface Document {
   id: number;
   fileName: string;
   pages: number;
 }
 
-// Componente principal
 export default function App() {
-  const [fileName, setFileName] = useState('');
-  const [pages, setPages] = useState('');
+  const [fileName, setFileName] = useState("");
+  const [pages, setPages] = useState("");
   const [queue, setQueue] = useState<Document[]>([]);
   const [idCounter, setIdCounter] = useState(1);
 
   const addToQueue = () => {
     if (!fileName || !pages || isNaN(Number(pages))) {
-      Alert.alert('Erro', 'Preencha todos os campos corretamente!');
+      Alert.alert("Erro", "Preencha todos os campos corretamente!");
       return;
     }
 
@@ -30,19 +35,22 @@ export default function App() {
 
     setQueue([...queue, newDocument]);
     setIdCounter(idCounter + 1);
-    setFileName('');
-    setPages('');
+    setFileName("");
+    setPages("");
   };
 
   const printNext = () => {
     if (queue.length === 0) {
-      Alert.alert('Fila vazia', 'Nenhum documento para imprimir!');
+      Alert.alert("Fila vazia", "Nenhum documento para imprimir!");
       return;
     }
 
     const [next, ...rest] = queue;
     setQueue(rest);
-    Alert.alert('Imprimindo', `Documento: ${next.fileName}\nPáginas: ${next.pages}`);
+    Alert.alert(
+      "Imprimindo",
+      `Documento: ${next.fileName}\nPáginas: ${next.pages}`,
+    );
   };
 
   return (
@@ -79,7 +87,9 @@ export default function App() {
             📄 {item.fileName} - {item.pages} página(s)
           </Text>
         )}
-        ListEmptyComponent={<Text style={styles.empty}>Nenhum documento na fila</Text>}
+        ListEmptyComponent={
+          <Text style={styles.empty}>Nenhum documento na fila</Text>
+        }
       />
     </View>
   );
@@ -91,36 +101,36 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     paddingTop: 50,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: "#f8f8f8",
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
-    textAlign: 'center',
-    color: '#333',
+    textAlign: "center",
+    color: "#333",
   },
   subtitle: {
     fontSize: 20,
     marginTop: 20,
-    fontWeight: '600',
-    color: '#444',
+    fontWeight: "600",
+    color: "#444",
   },
   input: {
     borderWidth: 1,
-    borderColor: '#aaa',
+    borderColor: "#aaa",
     padding: 10,
     marginBottom: 10,
     borderRadius: 8,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   item: {
     paddingVertical: 5,
     fontSize: 16,
   },
   empty: {
-    fontStyle: 'italic',
-    color: '#777',
+    fontStyle: "italic",
+    color: "#777",
     marginTop: 10,
   },
 });
